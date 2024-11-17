@@ -1,0 +1,180 @@
+/* Dark Mode Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.navbar {
+    background-color: #1f1f1f;
+}
+.navbar a {
+    color: #e0e0e0 !important;
+}
+.container {
+    margin-top: 50px;
+    flex: 1;
+}
+.card {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #1f1f1f;
+    border-color: #333;
+}
+.footer {
+    background-color: #1f1f1f;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-top: auto;
+}
+/* Padding for filter and table sections */
+.filters-section {
+    padding: 20px 0;
+}
+
+.table-section {
+    padding-top: 20px;
+}
+
+/* Pagination Container */
+.pagination-container {
+    margin-top: 20px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+/* Page Item Styling */
+.page-item {
+    margin: 0 5px;
+}
+
+/* Page Link Styling */
+.page-link {
+    color: #e0e0e0;
+    background-color: #333;
+    border-color: #444;
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-size: 14px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover Effects */
+.page-link:hover {
+    background-color: #555;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Active Page Styling */
+.page-item.active .page-link {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+/* Disabled Page Styling */
+.page-item.disabled .page-link {
+    background-color: #1f1f1f;
+    color: #777;
+    border-color: #444;
+    cursor: not-allowed;
+}
+
+/* First and Last Page Arrows */
+.page-link[aria-label="First"],
+.page-link[aria-label="Last"] {
+    font-size: 16px;
+}
+
+/* Previous and Next Arrows */
+.page-link[aria-label="Previous"],
+.page-link[aria-label="Next"] {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+/* Table Body Styling */
+tbody tr {
+    background-color: #2a2a2a; /* Slightly lighter dark background for rows */
+}
+
+td {
+    color: #e0e0e0;
+    padding: 12px 15px;
+    vertical-align: middle;
+}
+
+/* Hover Effect for Rows */
+tbody tr:hover {
+    background-color: #3b3b3b; /* Highlight row on hover */
+}
+
+/* Button Styling */
+.btn {
+    border-radius: 4px;
+    font-size: 14px;
+    padding: 6px 12px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Edit Button */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+/* Delete Button */
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* Modal Button Styling */
+.modal-button {
+    background-color: #ffa9a9;
+    color: #721c24;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.modal-button:hover {
+    background-color: #f1b0b7;
+    color: #c12a2a;
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+    table.table {
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+}
+.form-container {
+    margin-top: 50px;
+}

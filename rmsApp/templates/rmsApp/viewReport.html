@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Reports - Reports Management System</title>
+    <!-- Bootstrap CSS for responsive layout -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    {% load static %}
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="{% static 'rmsApp/styles.css' %}">
+    <!-- Link to the JavaScript file -->
+    <script src="{% static 'rmsApp/scripts.js' %}"></script>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Reports Management System</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'AddReport' %}">Add Report</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'ReportDetails' %}">View Reports</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- View Reports Content -->
+    <div class="container">
+        <h2 class="text-center">View Reports</h2>
+
+        <!-- Filters by Country, Module, and Edition -->
+        <form method="GET" action="{% url 'ReportDetails' %}">
+            <div class="row filters-section">
+                <!-- Search input field -->
+                <div class="col-md-3">
+                    <label for="query" class="form-label">Search by Report Name</label>
+                    <input type="text" name="query" id="query" class="form-control" placeholder="Enter report name" value="{{ request.GET.query }}">
+                </div>
+        
+                <!-- Filter by Country -->
+                <div class="col-md-3">
+                    <label for="filterCountry" class="form-label">Filter by Country</label>
+                    <select name="country" id="filterCountry" class="form-select">
+
+                        <option value="">All Countries</option>
+                        <option value="India" {% if request.GET.country == "India" %} selected
+                        {% endif %}>India</option>
+                        <option value="United States" {% if request.GET.country == "United States" %}selected{% endif %}>United States</option>
+                        <option value="United Kingdom" {% if request.GET.country == "United Kingdom" %}selected{% endif %}>United Kingdom</option>
+                        <option value="Canada" {% if request.GET.country == "Canada" %}selected
+                        {% endif %}>Canada</option>
+                        <option value="Australia" {% if request.GET.country == "Australia" %}selected{% endif %}>Australia</option>
+                        <option value="Germany" {% if request.GET.country == "Germany" %}selected{% endif %}>Germany</option>
+                        <option value="France" {% if request.GET.couuntry == "France" %}selected{% endif %}>France</option>
+
+                    </select>
+                </div>
+        
+                <!-- Filter by Module -->
+                <div class="col-md-3">
+                    <label for="filterModule" class="form-label">Filter by Module</label>
+                    <select name="module" id="filterModule" class="form-select">
+                        <option value="">All Modules</option>
+                        <option value="Finance" {% if request.GET.module == "Finance" %}selected{% endif %}>Finance</option>
+                        <option value="HR" {% if request.GET.module == "HR" %}selected{% endif %}>HR</option>
+                        <option value="Operations" {% if request.GET.module == "Operations" %}selected{% endif %}>Operations</option>
+                    </select>
+                </div>
+        
+                <!-- Filter by Edition -->
+                <div class="col-md-3">
+                    <label for="filterEdition" class="form-label">Filter by Edition</label>
+                    <select name="edition" id="filterEdition" class="form-select">
+                        <option value="">All Editions</option>
+                        <option value="1" {% if request.GET.edition == "1" %}selected{% endif %}>Edition 1</option>
+                        <option value="2" {% if request.GET.edition == "2" %}selected{% endif %}>Edition 2</option>
+                        <option value="3" {% if request.GET.edition == "3" %}selected{% endif %}>Edition 3</option>
+                    </select>
+                </div>
+            </div>
+        
+            <!-- Search and Reset Buttons -->
+            <button type="submit" class="btn btn-primary">Search</button>
+            <a href="{% url 'ReportDetails' %}" class="btn btn-secondary">Reset</a>
+        </form>        
+
+        <!-- Table of Reports -->
+        <div class="table-section">
+            <table class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Report Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Countries Supported</th>
+                        <th scope="col">Edition</th>
+                        <th scope="col">Module</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+        
+                <tbody>
+                    {% for report in page_obj %}
+                        <tr>
+                            <td>{{ report.name }}</td>
+                            <td>{{ report.description }}</td>
+                            <td>{{ report.supportedCountry }}</td>
+                            <td>{{ report.editionNumber }}</td>
+                            <td>{{ report.module }}</td>
+                            <td>
+                                <a href="{% url 'EditReport' report.pk %}" class="btn btn-primary btn-sm">Edit</a>
+                                <!-- Trigger the Modal -->
+                                <button type="button" class="btn btn-danger btn-sm modal-button" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ report.pk }}" data-name="{{ report.name }}">
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Download Catalog Button -->
+        <div class="text-center">
+            <a href="{% url 'DownloadCatalogPDF' %}" class="btn btn-success">Download PDF Catalog</a>
+        </div>
+    </div>
+
+    <!-- Table pagination with query parameter -->
+    <div class="pagination-container">
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1&query={{ request.GET.query }}&country={{ request.GET.country }}&module={{ request.GET.module }}&edition={{ request.GET.edition }}" aria-label="First">
+                            &laquo;&laquo;
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}&query={{ request.GET.query }}&country={{ request.GET.country }}&module={{ request.GET.module }}&edition={{ request.GET.edition }}" aria-label="Previous">
+                            &laquo;
+                        </a>
+                    </li>
+                {% endif %}
+        
+                <li class="page-item disabled">
+                    <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                </li>
+        
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}&query={{ request.GET.query }}&country={{ request.GET.country }}&module={{ request.GET.module }}&edition={{ request.GET.edition }}" aria-label="Next">
+                            &raquo;
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&query={{ request.GET.query }}&country={{ request.GET.country }}&module={{ request.GET.module }}&edition={{ request.GET.edition }}" aria-label="Last">
+                            &raquo;&raquo;
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>        
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Reports Management System. All rights reserved.</p>
+    </div>
+
+    <!-- Delete Report Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="background-color: #2b2b2b; color: #e0e0e0;">
+                <div class="modal-header" style="border-bottom: 1px solid #444;">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color: #e0e0e0;"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete the report <strong id="reportName" style="color: #ff7043;"></strong>?
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid #444;">
+                    <form id="deleteForm" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                    </form>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #555; color: #e0e0e0;">No, Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

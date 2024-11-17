@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Report - Reports Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    {% load static %}
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="{% static 'rmsApp/styles.css' %}">
+
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Reports Management System</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'AddReport' %}">Add Report</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'ReportDetails' %}">View Reports</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Update Report Form -->
+    <div class="container form-container">
+        <div class="card">
+            <h2 class="text-center">Edit Report</h2>
+            <form action="{% url 'EditReport' report.pk %}" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="reportName" class="form-label">Report Name</label>
+                    <input type="text" class="form-control" id="reportName" name="name" value="{{ report.name }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="reportDescription" class="form-label">Description</label>
+                    <textarea class="form-control" id="reportDescription" name="description" rows="3" required>{{ report.description }}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="reportRunner" class="form-label">Who Should Run This Report</label>
+                    <textarea class="form-control" id="reportRunner" name="runReport" rows="2" required>{{ report.runReport }}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="supportedCountries" class="form-label">Countries Supported</label>
+                    <select class="form-select" id="supportedCountries" name="supportedCountry" required>
+                        <option value="India" {% if report.supportedCountry == "India" %}selected{% endif %}>India</option>
+                        <option value="United States" {% if report.supportedCountry == "United States" %}selected{% endif %}>United States</option>
+                        <option value="United Kingdom" {% if report.supportedCountry == "United Kingdom" %}selected{% endif %}>United Kingdom</option>
+                        <option value="Canada" {% if report.supportedCountry == "Canada" %}selected{% endif %}>Canada</option>
+                        <option value="Australia" {% if report.supportedCountry == "Australia" %}selected{% endif %}>Australia</option>
+                        <option value="Germany" {% if report.supportedCountry == "Germany" %}selected{% endif %}>Germany</option>
+                        <option value="France" {% if report.supportedCountry == "France" %}selected{% endif %}>France</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="editionNumber" class="form-label">Edition Number</label>
+                    <select class="form-select" id="editionNumber" name="editionNumber" required>
+                        <option value="1" {% if report.editionNumber == "1" %}selected{% endif %}>Edition 1</option>
+                        <option value="2" {% if report.editionNumber == "2" %}selected{% endif %}>Edition 2</option>
+                        <option value="3" {% if report.editionNumber == "3" %}selected{% endif %}>Edition 3</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="managementModule" class="form-label">Management Module</label>
+                    <select class="form-select" id="managementModule" name="module" required>
+                        <option value="Finance" {% if report.module == "Finance" %}selected{% endif %}>Finance</option>
+                        <option value="HR" {% if report.module == "HR" %}selected{% endif %}>HR</option>
+                        <option value="Operations" {% if report.module == "Operations" %}selected{% endif %}>Operations</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <a href="{% url 'ReportDetails' %}" class="btn btn-danger">Cancel</a>
+            </form>    
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Reports Management System. All rights reserved.</p>
+    </div>
+    
+</body>
+
+</html>
